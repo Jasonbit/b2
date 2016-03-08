@@ -1,5 +1,5 @@
 module B2
-  class Doc < Base
+  class File < Base
     attr_accessor :bucket_id, :account_id, :content_length, :content_sha1, :content_type, :file_id, :filename, :file_info
 
     def create(upload_url, file, authorization_token, folder: nil, content_type: 'b2/x-auto', info: {})
@@ -10,10 +10,10 @@ module B2
         digest = Digest::SHA1.file(file.path).hexdigest
         body = file.read
       elsif file.is_a?(String)
-        size = File.size(file).to_s
-        filename = folder.nil? ? ERB::Util.url_encode(File.basename(file)) : "#{folder}/#{ERB::Util.url_encode(File.basename(file))}"
+        size = ::File.size(file).to_s
+        filename = folder.nil? ? ERB::Util.url_encode(::File.basename(file)) : "#{folder}/#{ERB::Util.url_encode(::File.basename(file))}"
         digest = Digest::SHA1.file(file).hexdigest
-        body = File.read(file)
+        body = ::File.read(file)
       else
         raise ArgumentError.new('Unsuitable data type. Please read the docs.')
       end

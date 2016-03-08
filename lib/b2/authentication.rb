@@ -11,6 +11,7 @@ module B2::Authentication
       B2::Base.base_uri "#{response['apiUrl']}/b2api/v1/"
       B2::Base.headers 'Authorization' => response['authorizationToken'], 'Content-Type' => 'application/json'
       B2::Base.cookies.merge!(download_url: response['downloadUrl'])
+      B2::Base.cookies.merge!(expired: Time.now + 3600 * 23)
     end
   end
 end

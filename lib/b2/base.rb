@@ -10,7 +10,7 @@ module B2
     end
 
     def initialize
-      B2::Authentication.authorize if B2::Base.base_uri.nil?
+      B2::Authentication.authorize if B2::Base.base_uri.nil? || (B2::Base.cookies[:expired] < Time.now)
       @download_url = B2::Base.cookies[:download_url]
     end
 
